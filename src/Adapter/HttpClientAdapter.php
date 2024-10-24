@@ -14,18 +14,11 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class HttpClientAdapter implements HttpClientAdapterInterface
 {
-    private HttpClientInterface $client;
-    private LoggerInterface $logger;
-    private string $apiKey;
-
     public function __construct(
-        HttpClientInterface $httpClientApi,
-        LoggerInterface $logger,
-        string $apiKey,
+        private HttpClientInterface $httpClientApi,
+        private LoggerInterface $logger,
     ) {
         $this->client = $httpClientApi;
-        $this->logger = $logger;
-        $this->apiKey = $apiKey;
     }
 
     public function get(string $uri, array $options = []): string
@@ -35,11 +28,6 @@ class HttpClientAdapter implements HttpClientAdapterInterface
 
     public function request(string $method, string $uri, array $options = []): string
     {
-        $options['query'] = array_merge(
-            $options['query'] ?? [],
-            ['api_key' => $this->apiKey]
-        );
-
         try {
             $response = $this->client->request($method, $uri, $options);
 

@@ -19,10 +19,6 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-    App\Adapter\HttpClientAdapter:
-        arguments:
-            $apiKey: '%env(API_KEY)%'
-
     App\Services\Api\ApiClient:
         arguments:
             $adapter: '@App\Adapter\HttpClientAdapter'

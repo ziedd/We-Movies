@@ -28,6 +28,8 @@ framework:
         scoped_clients:
             http.client.api:
                 base_uri: '%env(API_URL)%'
+                query:
+                    api_key: '%env(API_KEY)%'
 
 when@test:
     framework:
