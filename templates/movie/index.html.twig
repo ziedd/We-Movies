@@ -1,0 +1,30 @@
+{% if movies|length %}
+    <ul>
+        {% for movie in movies %}
+            <li>
+                <div class="row detail">
+                    <div class="col-3">
+                        <img src="{{ image_host ~ 'w185' ~ movie.posterPath }}" class="img-fluid rounded"
+                             alt="{{ movie.title }}"/>
+                    </div>
+                    <div class="col-9">
+                        <p class="title">
+                        <h3 class="title d-inline">{{ movie.title }}</h3>
+                        <div class="rating d-inline">
+                            {% set score = (movie.voteAverage / 2)|round %}
+                            {% for i in 1..5 %}
+                                <span class="fa fa-star {{ loop.index < score ? 'checked' : '' }}"></span>
+                            {% endfor %}
+                            <span class="rate">({{ movie.voteCount }} votes)</span>
+                        </div>
+                        </p>
+                        <p><span>{{ movie.releaseDate | slice(0,4) }}</span></p>
+                        <p class="description">{{ movie.overview }}</p>
+                        <a href="#" class="btn btn-primary btn-lg float-md-right" role="button" data-toggle="modal"
+                           data-target="#detailModal" data-id="{{ movie.id }}" aria-pressed="true">Lire le details</a>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

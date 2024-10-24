@@ -1,0 +1,27 @@
+{% if movie.error is not defined %}
+    <div class="detail-modal">
+        <div class="embed-responsive embed-responsive-16by9 video">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ video.key|default('notexist') }}" allowfullscreen></iframe>
+        </div>
+
+        <div class="">
+            <p class="title">
+            <h2 class="title">{{ movie.title }}</h2>
+            <div class="rating d-inline">
+                {% set score = (movie.voteAverage / 2)|round %}
+                {% for i in 1..5 %}
+                    <span class="fa fa-star {{ loop.index < score ? 'checked' : '' }}"></span>
+                {% endfor %}
+                <span class="rate"><b>{{ movie.voteAverage }}</b> pour {{ movie.voteCount}} utilisateur</span>
+            </div>
+            </p>
+            <p class="description">{{ movie.overview }}</p>
+        </div>
+    </div>
+{% else %}
+    <div class="detail-modal">
+        <div class="text-center">
+            <h4>Unable to load movie information!</h4>
+        </div>
+    </div>
+{% endif %}

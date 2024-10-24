@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <nav class="navbar offset-1 col-10">
+        <div class="row col-12">
+            <div class="col-4 title">
+                <h1 class="center">A propos de We Movies</h1>
+            </div>
+            <div class="row search col-8">
+                <div class="input-group input-group-lg">
+                    <input id="search" type="text" class="form-control"
+                           name="search" placeholder="Rechercher" data-image-host="{{ image_host ~ 'w45' }}">
+                    <div id="autocomplete"></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="row offset-1 col-10 banner">
+        <div class="embed-responsive embed-responsive-16by9 video">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ main_video.key }}" allowfullscreen></iframe>
+        </div>
+        <div class="resume">
+            <div class="image float-left"><img src="{{ image_host ~ 'w185' ~ lead_movie.posterPath}}" class="img-fluid rounded" alt="{{ lead_movie.title }}" /></div>
+            <div class="desc">
+                <h3 class="title">{{ lead_movie.title }}</h3>
+                <p class="description">{{ lead_movie.overview }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content offset-1 col-10 row">
+        <fieldset class="col-3" id="filters">
+            <ul>
+                {% for genre in genre_list %}
+                    <li class="custom-control form-control-lg">
+                        <input class="genre" type="checkbox" value="{{ genre.id }}" name="genre[]" id="genre-{{ genre.id }}" data-genre="{{ genre.id }}">
+                        <label class="form-check-label" for="genre-{{ genre.id }}">{{ genre.name }}</label>
+                    </li>
+                {% endfor %}
+            </ul>
+        </fieldset>
+        <div class="col-9">
+            <div class="spinner-border text-primary" role="status" id="loader">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div id="movie-list">
+                {% include 'movie/index.html.twig'%}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
